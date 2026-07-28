@@ -1,0 +1,12 @@
+<!DOCTYPE Technology>
+<Lpp_List>
+    <LPP fill="-2" layer="boundary" alpha="96" purpose="drawing" visible="1" rgb="11184810" protect="0" mode="0" line="0"/>
+    <LPP fill="18" layer="cond" alpha="128" purpose="drawing" visible="1" rgb="16759225" protect="0" mode="2" line="0"/>
+    <LPP fill="18" layer="cond_airbridge" alpha="128" purpose="drawing" visible="1" rgb="35071" protect="0" mode="2" line="0"/>
+    <LPP fill="18" layer="ground_fill" alpha="128" purpose="drawing" visible="1" rgb="16777096" protect="0" mode="2" line="0"/>
+    <LPP fill="18" layer="inductor" alpha="160" purpose="drawing" visible="1" rgb="53248" protect="0" mode="2" line="0"/>
+    <LPP fill="-2" layer="keepout" alpha="96" purpose="drawing" visible="1" rgb="40960" protect="0" mode="0" line="0"/>
+    <LPP fill="18" layer="silk_screen2" alpha="160" purpose="drawing" visible="1" rgb="16773083" protect="0" mode="2" line="0"/>
+    <LPP fill="18" layer="silk_screen" alpha="160" purpose="drawing" visible="1" rgb="16773083" protect="0" mode="2" line="0"/>
+    <LPP fill="18" layer="via_airbridge" alpha="128" purpose="drawing" visible="1" rgb="24576" protect="0" mode="2" line="0"/>
+</Lpp_List>
