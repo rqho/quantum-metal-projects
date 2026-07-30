@@ -113,6 +113,22 @@
 
 = Example: Single-Qubit Chip
 
+=== Substrate Editor
+We use *Single-Layer Technology* in the *Quantum Technology Library* to define the layout technology.
+- 750 um Silicon substrate
+- 200 nm perfect conductor layer
+- 8 um air
+- 200 nm air bridges
+
+=== Electromagnetic Simulation
+ADS QuantumPro supports two types of electromagnetic analysis methods:
+- *Full EM Analysis* does a frequency sweep of the circuit with input and output ports. It returns the S-parameters of the circuit, which can be converted to Y-parameters, Z-parameters, capacitance/inductance matrices, etc. It can use the FEM solver or the MoM solver.
+- *Energy Participation Analysis* finds the eigenfrequencies of the system along with electromagnetic field patterns supported by the modes. It only uses the FEM solver.
+Types of Solvers:
+- *Momentum RF*: a quasi-static solver that uses the method of moments
+- *Momentum Microwave*: a full EM solver based on the method of moments suitable for planar structures
+- *Finite Element Method*: a full EM solver based on the finite element method suitable for 3D structures
+
 = Example: Multi-Qubit Chip (GDS import)
 
 = Example: Flip-Chip
