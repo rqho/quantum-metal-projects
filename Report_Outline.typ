@@ -15,25 +15,18 @@
 
 = Introduction
 
-- Motivation: why this device / process matter
-- Brief circuit-QED context (qubit + readout resonator)
-- Software stack: PathWave ADS + QuantumPro
-- Design cycle overview:
-  + Schematic / Quantum Artwork layout
-  + Technology stackup + ports
-  + Linear EM (JJ $arrow.r$ abstract $L_J$)
-  + Extract S-parameters / quantum parameters
-  + Iterate geometry; export GDS
-- Scope of this walkthrough (what you will build and simulate)
-- Roadmap of remaining sections
+The transition from few-qubit testbeds to scalable quantum processors requires rigorous microwave engineering and tightly controlled electromagnetic environments. In circuit quantum electrodynamics (cQED), components such as transmon qubits and coplanar waveguide (CPW) resonators must be carefully tuned to hit specific target frequencies, anharmonicities, and coupling strengths.
 
-= Device Targets
+Historically, this required patching together disparate open-source layout scripts, standalone electromagnetic solvers, and custom Python extraction code. Keysight PathWave ADS with QuantumPro provides a unified, all-in-one ecosystem for this workflow. By treating the Josephson Junction (JJ) as a linear lumped inductor, this workflow bridges classical RF/microwave simulation with quantum mechanical parameter extraction via the Energy Participation Ratio (EPR) method. This report details the end-to-end iterative design cycle: from generating the native parametric layout and defining the substrate stack-up, to executing 3D EM simulations, extracting the quantum Hamiltonian, and finally exporting the fabrication-ready GDSII blueprint.
 
-- Chip / process assumptions (substrate, metal, temperature)
-- Target qubit frequency, anharmonicity $alpha$, $T_1$ goals
-- Target resonator frequency, $kappa$, dispersive shift $chi$
-- Coupling targets ($g$, nearest-neighbor if multi-qubit)
-- Topology choice (planar single-layer vs flip-chip; Xmon vs pocket; etc.)
+The iterative design and simulation workflow using the PathWave ADS + QuantumPro software stack can be summarized as follows:
+1. Define the target device parameters (qubit frequency, anharmonicity, resonator frequency, coupling strengths).
+2. Define the substrate and metal stack-up using the Quantum Technology library and the substrate editor.
+3. Create the schematic and parametric layout using Quantum Artwork and Quantum Devices components.
+4. Set up the electromagnetic simulation environment, including ports, mesh, and solver selection.
+5. Run full EM simulations to extract S-parameters, identify resonant modes, and extract quantum parameters.
+6. Iterate the design based on simulation results, adjusting geometry and layout to meet target specifications.
+7. Export the final design to GDSII for fabrication.
 
 = Layout Design
 
@@ -49,7 +42,7 @@
   + airbridge
   + inductor (JJ placeholder)
   + air / dielectric
-- Choose CPW $W$, $g$ for ~$50~Omega$; note $Z_0$, $epsilon_"eff"$, $L'$, $C'$
+- Choose CPW $(g, W, g)$ for ~50 $Omega$; note $Z_0$, $epsilon_"eff"$, $L'$, $C'$
 - Figure / screenshot: stackup editor
 
 == Creating Components
@@ -67,10 +60,17 @@
   + Record target $f$, $epsilon_"eff"$, resulting $ell$
 - Layout screenshots (schematic $arrow.r$ generated layout)
 
-= Electromagnetic Simulation
-
 - Why replace JJ with small-signal $L_J$ in linear EM
 - Classical (high power / $L_J$ off) vs dressed (quantum / $L_J$ on) spectra
+
+= Electromagnetic Simulation
+ADS QuantumPro supports two types of electromagnetic analysis methods:
+- *Full EM Analysis* does a frequency sweep of the circuit with input and output ports. It returns the S-parameters of the circuit, which can be converted to Y-parameters, Z-parameters, capacitance/inductance matrices, etc. It can use  Momentum RF, Momentum Microwave, and Finite Element Method solvers.
+- *Energy Participation Analysis* finds the eigenfrequencies of the system along with electromagnetic field patterns supported by the modes. It only uses the FEM solver.
+Types of Solvers:
+- *Momentum RF*: a quasi-static solver that uses the method of moments. This is recommended for fast analysis of planar structures.
+- *Momentum Microwave*: a full EM solver based on the method of moments suitable for planar structures. This solver is recommended for more accurate analysis of planar structures, especially when the quasi-static approximation is not valid.
+- *Finite Element Method*: a full EM solver based on the finite element method suitable for 3D structures.
 
 == Simulation Setup
 
@@ -119,15 +119,6 @@ We use *Single-Layer Technology* in the *Quantum Technology Library* to define t
 - 200 nm perfect conductor layer
 - 8 um air
 - 200 nm air bridges
-
-=== Electromagnetic Simulation
-ADS QuantumPro supports two types of electromagnetic analysis methods:
-- *Full EM Analysis* does a frequency sweep of the circuit with input and output ports. It returns the S-parameters of the circuit, which can be converted to Y-parameters, Z-parameters, capacitance/inductance matrices, etc. It can use the FEM solver or the MoM solver.
-- *Energy Participation Analysis* finds the eigenfrequencies of the system along with electromagnetic field patterns supported by the modes. It only uses the FEM solver.
-Types of Solvers:
-- *Momentum RF*: a quasi-static solver that uses the method of moments
-- *Momentum Microwave*: a full EM solver based on the method of moments suitable for planar structures
-- *Finite Element Method*: a full EM solver based on the finite element method suitable for 3D structures
 
 = Example: Multi-Qubit Chip (GDS import)
 
