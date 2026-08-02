@@ -9,7 +9,10 @@
 
   date: "August 15, 2026",
 )
-
+#set text(
+  font: "New Computer Modern",
+  size: 12pt
+)
 #set par(justify: false)
 #set heading(numbering: none)
 
@@ -32,36 +35,35 @@ The iterative design and simulation workflow using the PathWave ADS + QuantumPro
 
 == Defining Layers
 
-- Create workspace; select Quantum Technology Library (Single-Layer / Multi-Layer)
-- Open `tech:subst`: thicknesses, $epsilon_r$, loss tangent, PEC conductors
-- Layer roles to document (fill table or bullets as you go):
-  + `boundary`
-  + `conductor` / `cond`
-  + `keepout`
-  + ground fill
-  + airbridge
-  + inductor (JJ placeholder)
-  + air / dielectric
+When creating a workspace, the Quantum Technology Library provides a set of predefined layers and materials for superconducting quantum devices. You can select either a single-layer or multi-layer technology, and the substrate editor allows you to define the materials and thicknesses of each layer of the stack-up. The library is stored in `tech:subst`.
+
+A summary of the layer roles and their corresponding materials is provided below:
+- boundary: defines the physical extent of the chip and any keepout regions. In the layout editor, the designer can draw a rectangle or polygon to outline the chip.
+- conductor: defines the superconducting metal layer, typically made of niobium or aluminum. This layer is used for the qubit pads, resonators, and CPW lines. It is treated as a perfect conductor for simulation.
+- keepout: defines regions where no metal or other structures should be placed. This is used to prevent unwanted coupling or interference between components.
+- ground fill: defines the ground plane for the CPW structures. This layer is typically connected to the conductor layer and provides a return path for the microwave signals.
+- airbridge: defines the locations of airbridges that connect the ground planes across CPW gaps. Airbridges are used to suppress parasitic modes and improve the performance of the CPW structures.
+- inductor: defines the location of the Josephson Junction (JJ) or other inductive elements in the circuit. In the layout, this is typically represented as a small rectangle or polygon that connects to the qubit pads.
+- air / dielectric: defines the regions of air or dielectric material in the layout. This layer is used to model the electromagnetic environment around the superconducting structures.
+
+- TODO: Figure / screenshot: stackup editor
+
+== Controlled Impedance Line Designer (CILD)
+
+Before drawing your meander resonators or feedlines in the layout environment, you need to determine the physical dimensions (trace width and gap) required to achieve your target characteristic impedance, which is typically 50 $Omega$ for standard microwave components.
+
 - Choose CPW $(g, W, g)$ for ~50 $Omega$; note $Z_0$, $epsilon_"eff"$, $L'$, $C'$
-- Figure / screenshot: stackup editor
+
 
 == Creating Components
 
-- Schematic cells used in this design:
-  + Qubit: `Q_TransmonCross` / `Q_TransmonPocket` / ...
-  + Resonator / feed: `Q_CpwMeander`, `Q_CpwLine`, `Q_CpwCouplerT`, ...
-  + Ports / pads: `Q_CpwLaunchpadWirebond`, ...
-  + JJ model: `Q_InductorAbstract` ($L_J$, optional $C_J$)
-  + Other: interdigital caps, bumps, ...
-- Key geometry parameters set in schematic (orientation, lengths, gaps, claws)
-- Airbridges: where placed and why
-- Quarter-wave sizing checklist:
-  + $ell = c / (4 f sqrt(epsilon_"eff"))$
-  + Record target $f$, $epsilon_"eff"$, resulting $ell$
-- Layout screenshots (schematic $arrow.r$ generated layout)
+The ADS schematic and layout view has a library of parametric components for superconducting quantum devices in Quantum Artwork with customizable geometry and material properties. Parametric components include
 
-- Why replace JJ with small-signal $L_J$ in linear EM
-- Classical (high power / $L_J$ off) vs dressed (quantum / $L_J$ on) spectra
+- qubits: `Q_TransmonCross`, `Q_TransmonPocket`
+- resonators: `Q_CpwMeander`, `Q_CpwLine`, `Q_CpwCouplerT`
+- ports/pads: `Q_CpwLaunchpadWirebond`
+- JJ model: `Q_InductorAbstract`
+- other: interdigital capacitors, bumps, etc.
 
 = Electromagnetic Simulation
 ADS QuantumPro supports two types of electromagnetic analysis methods:
