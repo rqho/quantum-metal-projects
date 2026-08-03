@@ -76,12 +76,10 @@ Types of Solvers:
 
 == Simulation Setup
 
-- Ports: launchpad I/O; lumped port at each junction
-- Frequency span and local dense sweeps
-- Solver choice for this walkthrough (MoM QS / MoM Microwave / FEM)
-- Mesh strategy (global cpw; local refine on islands / junctions)
-- Materials confirmation checklist
-- Figure: port placement / mesh preview
+- *Ports*: for each launchpad on a feedline, place two pins on the pads to form a port. These act as the input/output for the EM simulation and S-parameter extraction. 
+- *Abstract Inductors*: for each Josephson Junction, place an abstract inductor component with the desired inductance value. This allows the EM solver to treat the JJ as a lumped element while still capturing its effect on the circuit. This is edited in the Component Model
+- *Frequency Sweep*: We typically use Adaptive frequency sweeps to detect rapid changes in the S-parameters and shrink the simulation step size to map the exact shape of the resonance.
+- *Meshing*: We increase the cells-per-wavelength (cpw) globally and even further near qubits and ports. For Momentum simulations, we use around 200 cpw globally and 1000-2000 cpw near ports. For FEM EPR simulations, we change the mesh density to 5 $mu$m edge length on center conductors.
 
 == Full EM and S-Parameters
 
