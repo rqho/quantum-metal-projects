@@ -81,36 +81,6 @@ Types of Solvers:
 - *Frequency Sweep*: We typically use Adaptive frequency sweeps to detect rapid changes in the S-parameters and shrink the simulation step size to map the exact shape of the resonance.
 - *Meshing*: We increase the cells-per-wavelength (cpw) globally and even further near qubits and ports. For Momentum simulations, we use around 200 cpw globally and 1000-2000 cpw near ports. For FEM EPR simulations, we change the mesh density to 5 $mu$m edge length on center conductors.
 
-== Full EM and S-Parameters
-
-- What you expect in $S_21$ / $S_11$
-- Peak identification: resonators vs qubits
-- Classical vs dressed shift $arrow.r$ dispersive information
-- Troubleshooting if peaks missing / overlapping:
-  + grounds / airbridges
-  + mesh
-  + mode collision
-- Figures: S-parameter plots (annotate modes)
-
-== Energy Participation Analysis (optional / recommended)
-
-- When you use FEM eigenmode + EPR vs Full EM only
-- Mesh notes for EPR
-- What you extract: $omega_m$, $Q$, $T_1$, participations, $chi$ matrix
-- Figures: mode fields / participation summary
-
-== Quantum Parameter Extraction
-
-- Extract / report:
-  + $C$ (or $E_C$), anharmonicity $alpha$
-  + Detuning $Delta$, coupling $g$, cross-Kerr $chi$
-- Compare solvers if you ran more than one (QS / FD / EPR)
-- Tuning knobs you actually used:
-  + $L_J$ $arrow.r$ qubit frequency
-  + resonator length $arrow.r$ $f_r$
-  + coupler / claw / overlap $arrow.r$ $g$, $chi$
-- Results table (fill with your numbers)
-
 = Example: Single-Qubit Chip
 
 === Substrate Editor
