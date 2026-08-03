@@ -96,8 +96,6 @@ We use *Single-Layer Technology* in the *Quantum Technology Library* to define t
 
 = Example: SQUIDs and SNAILs
 
-
-
 = Conclusion
 
 - What you designed and simulated
