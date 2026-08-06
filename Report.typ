@@ -112,7 +112,43 @@ The ports are defined by P1/P2 and P3/P4 and are loaded with a 50 $Omega$ lumped
 After generating the layout with `Layout > Generate/Update Layout`, we can see the layout view of the single-qubit chip. Draw two rectangles in the `boundary` and `keepout` layers to define geometry of the chip.
 
 === Simulation
-After opening QuantumPro, right-click on the plane enclosing the design on the model and set it as Ground. Then, create ports P1/P2 and P3/P4 and component models for the JJ in the Full EM Analysis and Energy Participation Analysis simulation setups.
+After opening QuantumPro, right-click on the plane enclosing the design on the model and set it as Ground. Then, create ports P1/P2 and P3/P4 and component models for the JJ in the Full EM Analysis and Energy Participation Analysis simulation setups. For the inductor component model, change the model to Lumped and set the inductance to 11 nH.
+
+For Full EM Analysis :
+- The frequency sweep is Adaptive from 1 to 10 GHz with 300 points.
+- Mesh should be refined (under Simulator) to approximately 200 cpw.
+- For better simulation accuracy and to capture the capacitive effects around the transmon pocket, it is recommended to increase the mesh density near the transmon pocket.
+- Clicking the simulation setup button (the wrench icon) brings up Advanced Simulator Setup as shown below. The meshes for Nets 5 and 6 should be set to 2000 cpw (green box).
+- Edge mesh should be enabled (set to Automatic) to accurately capture the current distribution across the CPW lines.
+
+#figure(
+  image("assets/1Qfemsimulator.png", width: 70%),
+  caption: [
+    Advanced Simulator Setup for Full EM Analysis.
+  ],
+)
+
+For Energy Participation Analysis :
+- The frequency sweep is from 1 to 10 GHz.
+- In Advanced Simulator, the Target Mesh Size should be set Automatic
+- For the overriding condition, conductors cond(1) should be set to 5 um. This secures two mesh elements per the CPW line strip.
+
+#figure(
+  image("assets/1Qeprsimulator.png", width: 70%),
+  caption: [
+    Advanced Simulator Setup for Energy Participation Analysis.
+  ],
+)
+
+=== Results
+#table(
+  columns: (auto,auto, auto),
+  stroke: none,
+
+  [], [Full EM Analysis], [Energy Participation Analysis],
+  [Mesh], [#image("assets/1Qfemmesh.png")], [#image("assets/1Qeprmesh.png")],
+  [Extracted\ Parameters], [#image("assets/1Qfemparams.png")], [#image("assets/1Qeprparams.png")],
+)
 
 = Example: Multi-Qubit Chip (GDS import)
 
