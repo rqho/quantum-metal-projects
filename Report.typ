@@ -9,6 +9,9 @@
 
   date: "August 15, 2026",
 )
+
+#show link: underline
+
 #set text(
   font: "New Computer Modern",
   size: 12pt
@@ -114,6 +117,14 @@ After generating the layout with `Layout > Generate/Update Layout`, we can see t
 === Simulation
 After opening QuantumPro, right-click on the plane enclosing the design on the model and set it as Ground. Then, create ports P1/P2 and P3/P4 and component models for the JJ in the Full EM Analysis and Energy Participation Analysis simulation setups. For the inductor component model, change the model to Lumped and set the inductance to 11 nH.
 
+#figure(
+  image("assets/ComponentModel.png", width: 70%),
+  caption: [
+    The component model editor for the `Q_InductorAbstract` component.
+  ],
+)
+
+
 For Full EM Analysis :
 - The frequency sweep is Adaptive from 1 to 10 GHz with 300 points.
 - Mesh should be refined (under Simulator) to approximately 200 cpw.
@@ -122,7 +133,12 @@ For Full EM Analysis :
 - Edge mesh should be enabled (set to Automatic) to accurately capture the current distribution across the CPW lines.
 
 #figure(
-  image("assets/1Qfemsimulator.png", width: 70%),
+  grid(
+    columns: 2,
+    gutter: 0.5em,
+    image("assets/1Qfemsimulator1.png", width: 100%),
+    image("assets/1Qfemsimulator.png", width: 100%),
+  ),
   caption: [
     Advanced Simulator Setup for Full EM Analysis.
   ],
@@ -141,8 +157,9 @@ For Energy Participation Analysis :
 )
 
 === Results
+The simulation results include the mesh and extracted parameters for both FEM and EPR simulations. Note that the extracted parameters window only shows if the simulator sees a qubit in the design. The extracted parameters are the qubit frequency, anharmonicity, and cross-Kerr coupling strength. 
 #table(
-  columns: (auto,auto, auto),
+  columns: (auto, auto, auto),
   stroke: none,
 
   [], [Full EM Analysis], [Energy Participation Analysis],
@@ -152,19 +169,56 @@ For Energy Participation Analysis :
 
 = Example: Multi-Qubit Chip (GDS import)
 
-=== Substrate Editor
-We use *Single-Layer Technology* in the *Quantum Technology Library* to define the layout technology with the following thicknesses: 750 um Silicon dielectric, 200 nm perfect conductor, 8 um air.
-
-=== Schematic
-
 === Layout
+When importing a design from a GDSII file into ADS, map the layers to the Quantum Technology Library layers. This design was created in Quantum Metal (formerly Qiskit Metal) and then exported to GDSII. We use the layer mapping below (following this #link("https://www.youtube.com/watch?v=PFE4E2bohyI&t=364s")[video tutorial]).
+
+#figure(
+  image("assets/GDSImport.png", width: 80%),
+  caption: [
+    Layer mapping for the GDS import.
+  ],
+)
+
+#figure(
+  image("assets/MultiQubitLayout.png", width: 70%),
+  caption: [
+    Layout view of the three-qubit chip.
+  ],
+)
+
+To prepare the design for simulation, we need to add ports to the launchpads and inductors to the Josephson junctions at the qubits.
+
+#table(
+  columns: (auto, auto),
+  stroke: none,
+
+  [#image("assets/MultiQubitPorts.png", width: 70%)], [#image("assets/MultiQubitInductors.png", width: 100%)],
+)
 
 === Simulation
+Following the same steps as the single-qubit example, we can set up the simulation for the three-qubit chip. When viewing the simulation results, we can select Near Field to view the electric field distribution at each eigenfrequency.
+
+#table(
+  columns: (auto, auto, auto),
+  align: center,
+  stroke: none,
+
+  [#image("assets/MultiQubit1.png")], [#image("assets/MultiQubit2.png")], [#image("assets/MultiQubit3.png")],
+  [Qubit 1: 3.82 GHz], [Qubit 2: 3.95 GHz], [Qubit 3: 4.15 GHz],
+)
 
 = Example: Flip-Chip
+This example demonstrates the design and simulation of a flip-chip qubit with a CPW resonator.
 
 === Substrate Editor
-We use *Single-Layer Technology* in the *Quantum Technology Library* to define the layout technology with the following thicknesses: 750 um Silicon dielectric, 200 nm perfect conductor, 8 um air.
+We use *Multi-Layer Technology* in the *Quantum Technology Library* to define the layout technology with the following thicknesses: 750 um Silicon dielectric, 200 nm perfect conductor, 8 um air, 200 nm perfect conductor, 750 um Silicon dielectric.
+
+#figure(
+  image("assets/FlipChipSubstrate.png"),
+  caption: [
+    Substrate editor view of the flip-chip qubit.
+  ],
+)
 
 === Schematic
 
@@ -175,7 +229,6 @@ We use *Single-Layer Technology* in the *Quantum Technology Library* to define t
 = Example: SQUIDs and SNAILs
 
 === Substrate Editor
-We use *Single-Layer Technology* in the *Quantum Technology Library* to define the layout technology with the following thicknesses: 750 um Silicon dielectric, 200 nm perfect conductor, 8 um air.
 
 === Schematic
 
