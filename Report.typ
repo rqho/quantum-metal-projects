@@ -211,7 +211,19 @@ Following the same steps as the single-qubit example, we can set up the simulati
 This example demonstrates the design and simulation of a flip-chip qubit with a CPW resonator.
 
 === Substrate Editor
-We use *Multi-Layer Technology* in the *Quantum Technology Library* to define the layout technology with the following thicknesses: 750 um Silicon dielectric, 200 nm perfect conductor, 8 um air, 200 nm perfect conductor, 750 um Silicon dielectric.
+We use *Multi-Layer Technology* in the *Quantum Technology Library* to define the layout technology with the following thicknesses: 280 um Silicon dielectric, 0 nm perfect conductor, 1 um airbridge, and 6 um air dielectric spacing between the chips. The total chip-to-chip distance is 8 um.
+
+#figure(
+  grid(
+    columns: 2,
+    gutter: 0.5em,
+    image("assets/FlipChipLayer1.png", width: 100%),
+    image("assets/FlipChipLayer2.png", width: 100%),
+  ),
+  caption: [
+    Layer setup for the flip-chip qubit design.
+  ],
+)
 
 #figure(
   image("assets/FlipChipSubstrate.png"),
@@ -221,10 +233,33 @@ We use *Multi-Layer Technology* in the *Quantum Technology Library* to define th
 )
 
 === Schematic
+#figure(
+  image("assets/FlipChipSchematic.png"),
+  caption: [
+    Schematic view of the flip-chip qubit design.
+  ],
+)
+
+When editing the schematic/layout, you can specify what components are on the top chip and the bottom chip by editing the parameter `LayerGroupPrefix`. In this example, we use "2\_" for the transmon and inductor for the top chip.
 
 === Layout
+#figure(
+  image("assets/FlipChipLayout.png"),
+  caption: [
+    Layout view of the flip-chip qubit design.
+  ],
+)
+
+In the layout, we draw a rectangle in the `boundary` (the bigger rectangle enclosing the resonator and feedline) layer to define the geometry of the bottom chip. The top chip is defined by the `2_boundary` (the smaller rectangle enclosing the qubit) layer in the layout of the top chip. We also create cirles in the `bump1_2` (red) layer to define the locations of the bumps that connect the two chips.
 
 === Simulation
+
+#figure(
+  image("assets/FlipChipQuantumPro.png", width: 70%),
+  caption: [
+    3D view for the flip-chip qubit design in QuantumPro. Use the zoom tool to expand the figure.
+  ],
+)
 
 = Example: SQUIDs and SNAILs
 
