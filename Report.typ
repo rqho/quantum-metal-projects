@@ -261,14 +261,21 @@ In the layout, we draw a rectangle in the `boundary` (the bigger rectangle enclo
   ],
 )
 
+#table(
+  columns: (auto, auto),
+  align: center,
+  stroke: none,
+
+  [#image("assets/FlipChipQubit.png")], [#image("assets/FlipChipResonator.png")],
+  [Qubit: 4.27 GHz], [Resonator: 7.17 GHz],
+)
+
 = Example: SQUIDs and SNAILs
-
-=== Substrate Editor
-
-=== Schematic
-
+This example demonstrates the design and simulation of a SQUID and SNAIL devices. There are tutorials in the Keysight ADS documentation for simulating SQUID circuits in the schematic editor but there are none for designing their layout.
+- A SQUID consists of two Josephson Junctions located on opposite sides of a rectangular loop.
+- A SNAIL consists of a superconducting loop interrupted by $n$ large Josephson junctions on one arm (here $n = 3$) and a single smaller junction on the opposite arm.
 === Layout
-
+I first tried inserting lumped inductor models in the
 === Simulation
 
 = Conclusion
@@ -276,6 +283,8 @@ In the layout, we draw a rectangle in the `boundary` (the bigger rectangle enclo
 - What you designed and simulated
 - Main quantitative outcomes
 - Lessons for the next chip revision
+
+#pagebreak()
 
 = References
 
