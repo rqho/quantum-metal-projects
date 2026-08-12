@@ -302,7 +302,42 @@ A `Q_SquidLoop` component from Quantum Artwork is used to create the loop and th
 )
 
 === Simulation
-Using the eneery participation analysis, 
+Using a combination of full EM analysis and energy participation analysis, we can extract the eigenfrequencies and the electric field distribution at each eigenfrequency.
+
+#pagebreak()
+
+#table(
+  columns: (auto, auto),
+  align: center,
+  stroke: none,
+
+  [#image("assets/SQUIDTL.png", height: 40%) Top Left Resonator: 4.47 GHz], [#image("assets/SQUIDBL.png", height: 40%) Bottom Left: 8.55 GHz],
+  [Top Right Resonator: 6.4 GHz], [#image("assets/SQUIDBR.png", height: 40%) Bottom Right: 11.35 GHz],
+)
+
+#figure(
+  table(
+    columns: 5,
+    stroke: none,
+    inset: (x: 8pt, y: 6pt),
+    align: (left, center, center, center, center),
+    table.hline(stroke: 0.08em),
+    table.header(
+      [*Resonator*],
+      [*Termination*],
+      [*Designed*\ $f_r$ (GHz)],
+      [*Simulated*\ (shorted) (GHz)],
+      [*Simulated*\ (SQUID/SNAIL) (GHz)],
+    ),
+    table.hline(stroke: 0.05em),
+    [Top Left], [Short], [4.8], [4.601], [4.47\*],
+    [Bottom Left], [SQUID], [4.2], [4.178], [8.55],
+    [Top Right], [SQUID], [6.4], [6.291], [---],
+    [Bottom Right], [SNAIL], [6.2], [6.159], [11.35],
+    table.hline(stroke: 0.08em),
+  ),
+  caption: [Comparison of designed and simulated eigenfrequencies for the SQUID/SNAIL chip resonators.],
+)
 
 #pagebreak()
 
