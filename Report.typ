@@ -274,21 +274,40 @@ In the layout, we draw a rectangle in the `boundary` (the bigger rectangle enclo
 This example demonstrates the design and simulation of a SQUID and SNAIL devices. There are tutorials in the Keysight ADS documentation for simulating SQUID circuits in the schematic editor but there are none for designing their layout.
 - A SQUID consists of two Josephson Junctions located on opposite sides of a rectangular loop.
 - A SNAIL consists of a superconducting loop interrupted by $n$ large Josephson junctions on one arm (here $n = 3$) and a single smaller junction on the opposite arm.
+
 === Layout
-I first tried inserting lumped inductor models in the
+#figure(
+  image("assets/SQUIDChip.png", width: 60%),
+  caption: [
+    Layout view of the SQUID chip.
+  ],
+)
+Specifications:
+- Top Left Resonator: Designed for $f_r = 4.8$ GHz with $Q_c = 400$k
+  - Shorted to ground
+- Bottom Left Resonator: Designed for $f_r = 4.2$ GHz with $Q_c = 500$k
+  - Terminated with SQUID with 51.7 pH large inductor and 128.8 pH small inductor
+- Top Right Resonator: Designed for $f_r = 6.4$ GHz with $Q_c = 200$k
+  - Terminated with SQUID with 51.7 pH large inductor and 128.8 pH small inductor
+- Bottom Right Resonator: Designed for $f_r = 6.2$ GHz with $Q_c = 230$k
+  - Terminated with SNAIL with 3 $times$ 0.685nH large inductor and 6.42 nH small inductor
+
+A `Q_SquidLoop` component from Quantum Artwork is used to create the loop and the geometry of the loop and the inductors are modified to fit into the gap between the resonator and the ground plane as shown.
+
+#figure(
+  image("assets/SQUIDLoop.png", width: 60%),
+  caption: [
+    Layout view of the SQUID loop.
+  ],
+)
+
 === Simulation
-
-= Conclusion
-
-- What you designed and simulated
-- Main quantitative outcomes
-- Lessons for the next chip revision
+Using the eneery participation analysis, 
 
 #pagebreak()
 
 = References
 
-+ TODO: papers and Keysight app notes you relied on
 + P. Krantz et al., "A quantum engineer's guide to superconducting qubits," _Appl. Phys. Rev._ *6*, 021318 (2019).
 + Keysight Technologies, "Designing for Superconducting Qubit Circuits," Appl. Note 3123-1286.EN (2023).
 + Keysight Technologies, "Quantum Parameter Extraction in QuantumPro," Appl. Note 3123-1662.EN (2023).
